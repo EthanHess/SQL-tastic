@@ -50,10 +50,12 @@ typedef void (^CompletionBlock)();
     NSHashTable *myHashtable = [NSHashTable
                                 hashTableWithOptions:NSPointerFunctionsCopyIn];
     
+    //Map table may be better for newer iOS versions
+    
     for (int i = 0; i < [self arrayToHash].count; i++) {
         NSDictionary *dict = [self arrayToHash][i];
         NSString *value = dict[[NSString stringWithFormat:@"%i", i]];
-        [myHashtable setValue:value forKey:[NSString stringWithFormat:@"%i", i]];
+        [myHashtable setValue:value forKey:[NSString stringWithFormat:@"%i", i + 1]];
     }
     
     NSLog(@"--- MY HASHTABLE %@ ---", myHashtable);
