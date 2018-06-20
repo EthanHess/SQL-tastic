@@ -7,10 +7,20 @@
 //
 
 #import "MediaUploadViewController.h"
+@import AVKit;
 
-@interface MediaUploadViewController ()
+@interface MediaUploadViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *blanketView;
+
+@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UIImageView *displayUploadImageView;
+@property (nonatomic, strong) UIButton *imageButton;
+@property (nonatomic, strong) UIButton *videoButton;
+
+@property (nonatomic, strong) UIImagePickerController *imagePicker;
+@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) AVPlayerLayer *theLayer;
 
 @end
 
@@ -24,6 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.view.backgroundColor = [UIColor darkGrayColor];
     [self configureBlanketView];
 }
 
@@ -38,15 +49,61 @@
     self.blanketView.layer.masksToBounds = YES;
     self.blanketView.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.blanketView.layer.borderWidth = 1;
+    self.blanketView.alpha = 0;
+    
+    [self addBlurToBlanketView];
     
     [self addSubviewsToBlanketView];
     
     [self.view addSubview:self.blanketView];
+    
+    [UIView animateWithDuration:1 animations:^{
+        self.blanketView.alpha = 0.85;
+    }];
+}
+
+- (void)addBlurToBlanketView {
+    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    visualEffectView.frame = self.blanketView.bounds;
+    [self.blanketView addSubview:visualEffectView];
 }
 
 - (void)addSubviewsToBlanketView {
     
+    CGFloat xCoord = self.view.frame.size.width / 10;
     
+    CGRect finalFrameI = CGRectMake(xCoord, xCoord * 4, xCoord * 2, xCoord * 2);
+    CGRect finalFrameV = CGRectMake(xCoord * 6, xCoord * 4, xCoord * 2, xCoord * 2);
+    
+    self.imageButton = [[UIButton alloc]initWithFrame:CGRectMake(xCoord * 2, xCoord * 5, 0, 0)];
+    [self.imageButton setTitle:@"Image" forState:UIControlStateNormal];
+    self.imageButton.backgroundColor = [UIColor blackColor];
+    [self.imageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.imageButton.layer.masksToBounds = YES;
+    [self.blanketView addSubview:self.imageButton];
+    
+    self.videoButton = [[UIButton alloc]initWithFrame:CGRectMake(xCoord * 7, xCoord * 5, 0, 0)];
+    [self.videoButton setTitle:@"Video" forState:UIControlStateNormal];
+    self.videoButton.backgroundColor = [UIColor blackColor];
+    [self.videoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.videoButton.layer.masksToBounds = YES;
+    [self.blanketView addSubview:self.videoButton];
+    
+    [UIView animateWithDuration:2 animations:^{
+        self.imageButton.layer.cornerRadius = xCoord;
+        self.imageButton.frame = finalFrameI;
+    }];
+    
+    [UIView animateWithDuration:1 animations:^{
+        self.videoButton.layer.cornerRadius = xCoord;
+        self.videoButton.frame = finalFrameV;
+    }];
+    
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

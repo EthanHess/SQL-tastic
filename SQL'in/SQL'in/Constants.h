@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 
 //Not sure if needed
-#define DATABASE_PATH                               [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]stringByAppendingPathComponent:@"sportsSensorDB.sqlite"]
+#define DATABASE_PATH                               [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]stringByAppendingPathComponent:@"SQLDatabase.sqlite"]
 
-#define TABLE_NAME_USER                             @"tbl_user"
+#define TABLE_NAME_USER                                 @"tbl_user"
 #define USER_ID                                         @"id"
 #define USER_NAME                                       @"user_name"
 #define USER_PASSWORD                                   @"user_password"
 #define USER_PERMISSION                                 @"user_permission"
-#define USER_IMAGE_LOCATION                                 @"image_loc"
+#define USER_IMAGE_LOCATION                             @"image_loc"
 
 @interface Constants : NSObject
 

@@ -7,6 +7,7 @@
 //
 
 #import "ScrollContainerView.h"
+#import "AnimatingImageView.h"
 
 @interface ScrollContainerView ()
 
@@ -84,17 +85,15 @@
         UITapGestureRecognizer *theTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewTapped:)];
         [containerView addGestureRecognizer:theTap];
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, dimension - 10, dimension - 10)];
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2;
-        imageView.layer.borderColor = [[UIColor darkGrayColor]CGColor];
-        imageView.layer.borderWidth = 1;
-        imageView.layer.masksToBounds = YES;
-        imageView.backgroundColor = [self colorArray][i];
+        AnimatingImageView *imageView = [[AnimatingImageView alloc]initWithFrame:CGRectMake(5, 5, dimension - 10, dimension - 10)];
+        
+        AnimatingImageView *miniImageView = [[AnimatingImageView alloc]initWithFrame:CGRectMake(dimension / 2, dimension / 2, dimension / 2.75, dimension / 2.75)];
         
         UILabel *theLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, dimension - 10, dimension, 10)];
         theLabel.text = [self textArray][i];
         
         [containerView addSubview:imageView];
+        [imageView addSubview:miniImageView];
         [containerView addSubview:theLabel];
         
         [self.scrollView addSubview:containerView];

@@ -127,4 +127,34 @@
     }
 }
 
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password {
+    
+}
+
+//BEGIN TEST (TODO IMPLEMENT)
+
+- (User *)getUserDataByUsername:(NSString *)username {
+    
+    User *userObject;
+    return userObject;
+}
+
+- (User *)getUserDataWithIdString:(int)userID {
+    
+    User *userObject;
+    return userObject;
+}
+
+- (User *)getUserDataWithPermission:(int)permission {
+    
+    User *userObject;
+    return userObject;
+}
+
+//END TEST
+
+- (BOOL)insertUserData:(User *)userObject {
+    return YES;
+}
+
 @end

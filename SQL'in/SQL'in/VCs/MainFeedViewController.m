@@ -7,11 +7,15 @@
 //
 
 #import "MainFeedViewController.h"
+#import "MediaUploadViewController.h"
 
 @interface MainFeedViewController () <ScrollContainerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
+//Custom
 @property (nonatomic, strong) ScrollContainerView *scrollContainer;
 
+//Apple
+@property (nonatomic, strong) UIBarButtonItem *rightUploadButton;
 @property (nonatomic, strong) NSMutableArray *storiesArray;
 @property (nonatomic, strong) NSMutableArray *postArray;
 
@@ -28,6 +32,17 @@
     [super viewWillAppear:animated];
     
     [self setUpViews];
+    [self setUpBarButton];
+}
+
+- (void)setUpBarButton {
+    self.rightUploadButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(presentMediaUpload)];
+    self.tabBarController.navigationItem.rightBarButtonItem = self.rightUploadButton;
+}
+
+- (void)presentMediaUpload {
+    MediaUploadViewController *mediaUploadVC = [[MediaUploadViewController alloc]init];
+    [self presentViewController:mediaUploadVC animated:YES completion:nil];
 }
 
 - (void)setUpViews {

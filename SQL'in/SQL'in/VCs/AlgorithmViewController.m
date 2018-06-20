@@ -36,9 +36,27 @@ typedef void (^CompletionBlock)();
     
     [self fizzBuzzWithNumber:100 andComplete:^(NSString *completion) {
         [self performActionWithCompletion:^{
-            
+            [self setUpHashTable];
         }];
     }];
+}
+
+- (NSArray *)arrayToHash {
+    return @[@{@"1": @"A"}, @{@"2": @"B"}, @{@"3": @"C"}, @{@"4": @"D"}, @{@"5": @"E"}, @{@"6": @"F"}, @{@"7": @"G"}, @{@"8": @"H"}, @{@"9": @"I"}, @{@"10": @"J"}, @{@"11": @"K"}, @{@"12": @"L"}];
+}
+
+- (void)setUpHashTable { //Hash tables rule because they're O(1) (lookup functions), unless of course a collision happens
+    
+    NSHashTable *myHashtable = [NSHashTable
+                                hashTableWithOptions:NSPointerFunctionsCopyIn];
+    
+    for (int i = 0; i < [self arrayToHash].count; i++) {
+        NSDictionary *dict = [self arrayToHash][i];
+        NSString *value = dict[[NSString stringWithFormat:@"%i", i]];
+        [myHashtable setValue:value forKey:[NSString stringWithFormat:@"%i", i]];
+    }
+    
+    NSLog(@"--- MY HASHTABLE %@ ---", myHashtable);
 }
 
 //Code credit (although I changed a few things) http://www.knowstack.com/sorting-algorithms-in-objective-c/
